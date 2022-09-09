@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0.30
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_DATABASE=subjecttest
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  redisserver:
+     image: redis:alpine
+     ports:
+       - "6379:6379"
+     volumes:
+       - redis:/data
+    
+volumes:
+  db:
+    driver: local
+  redis:
+     driver: local
+      
+
